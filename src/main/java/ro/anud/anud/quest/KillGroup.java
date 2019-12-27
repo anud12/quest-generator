@@ -1,6 +1,6 @@
 package ro.anud.anud.quest;
 
-import ro.anud.anud.action.KillAction;
+import ro.anud.anud.action.KillDilema;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcRepository;
 
@@ -34,10 +34,11 @@ public class KillGroup implements Quest {
         }
 
         this.number = this.number - 1;
+        npcMap.get(this.number).addHistory("Killed");
         if (this.number <= 0) {
             return new TurnInQuest(npc);
         }
 
-        return new KillAction(npc, () -> this).get();
+        return new KillDilema(() -> this).get();
     }
 }

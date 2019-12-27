@@ -4,13 +4,11 @@ import ro.anud.anud.npc.Npc;
 import ro.anud.anud.quest.KillImportantQuest;
 import ro.anud.anud.quest.Quest;
 
-import java.util.function.Supplier;
-
-public class BetrayalAction implements Action {
+public class BetrayalDilema implements Dilema {
 
     private Npc npc;
 
-    public BetrayalAction(final Npc npc) {
+    public BetrayalDilema(final Npc npc) {
         this.npc = npc;
         npc.addHistory("Betrayed player");
     }

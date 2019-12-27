@@ -1,7 +1,7 @@
 package ro.anud.anud;
 
 import ro.anud.anud.npc.NpcRepository;
-import ro.anud.anud.action.GetQuestAction;
+import ro.anud.anud.action.GetQuestDilema;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Main {
     public static void main(String[] args) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        var currentChain = new AtomicReference<>(new GetQuestAction(NpcRepository.create()).get());
+        var currentChain = new AtomicReference<>(new GetQuestDilema(NpcRepository.create()).get());
         var keepGoing = new AtomicBoolean(true);
         while (keepGoing.get()) {
             currentChain.updateAndGet(newQuest -> newQuest.read(() -> {
@@ -36,7 +36,7 @@ public class Main {
                 .stream()
                 .flatMap(npc -> npc.getHistory().entrySet()
                         .stream()
-                        .peek(entry -> entry.setValue(npc.getId() + " : " + entry.getValue()))
+                        .peek(entry -> entry.setValue(npc.getId() + " - " + npc.getName() + " : " + entry.getValue()))
                 )
                 .sorted(Comparator.comparing(Map.Entry::getKey))
                 .forEach(entry -> {

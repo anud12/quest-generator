@@ -6,11 +6,11 @@ import ro.anud.markovchain.Choice;
 
 import java.util.function.Supplier;
 
-public class KillImportantAction implements Action {
+public class KillImportantDilema implements Dilema {
     private Supplier<Quest> parent;
     private Npc npc;
 
-    public KillImportantAction(final Npc npc, final Supplier<Quest> parent) {
+    public KillImportantDilema(final Npc npc, final Supplier<Quest> parent) {
         this.parent = parent;
         this.npc = npc;
     }
@@ -20,7 +20,7 @@ public class KillImportantAction implements Action {
         npc.addHistory("Killed");
         return new Choice<Supplier<Quest>>()
                 .addChoice(0.3, parent)
-                .addChoice(0.7, () -> new FoundImportantItemAction().get())
+                .addChoice(0.7, () -> new FoundImportantItemDilema().get())
                 .chose()
                 .get();
     }

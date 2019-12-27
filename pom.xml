@@ -14,6 +14,11 @@
     <dependencies>
         <dependency>
             <groupId>ro.anud</groupId>
+            <artifactId>name-generator</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ro.anud</groupId>
             <artifactId>markov-chain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

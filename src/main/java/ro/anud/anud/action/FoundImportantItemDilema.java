@@ -5,13 +5,11 @@ import ro.anud.anud.npc.NpcRepository;
 import ro.anud.anud.quest.Quest;
 import ro.anud.anud.quest.SeekNpcQuest;
 
-import java.util.function.Supplier;
-
-public class FoundImportantItemAction implements Action {
+public class FoundImportantItemDilema implements Dilema {
 
     private final Npc targetNpc;
 
-    public FoundImportantItemAction() {
+    public FoundImportantItemDilema() {
         this.targetNpc = NpcRepository.create();
         targetNpc.addHistory("Remembers lost item");
     }

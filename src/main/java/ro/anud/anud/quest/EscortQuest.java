@@ -1,6 +1,6 @@
 package ro.anud.anud.quest;
 
-import ro.anud.anud.action.BetrayalAction;
+import ro.anud.anud.action.BetrayalDilema;
 import ro.anud.anud.npc.Npc;
 import ro.anud.markovchain.Choice;
 
@@ -32,7 +32,7 @@ public class EscortQuest implements Quest {
 
         return new Choice<Supplier<Quest>>()
                 .addChoice(0.9, () -> this)
-                .addChoice(0.1, () -> new BetrayalAction(npc).get())
+                .addChoice(0.1, () -> new BetrayalDilema(npc).get())
                 .chose()
                 .get();
     }
