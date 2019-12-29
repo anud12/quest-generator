@@ -1,9 +1,10 @@
 package ro.anud.anud.npc;
 
+import ro.anud.anud.Position;
+import ro.anud.anud.activity.Activity;
+
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Npc {
@@ -12,32 +13,20 @@ public class Npc {
     private static AtomicReference<Integer> generator = new AtomicReference<>(0);
     private Integer id;
     private String name;
-    private Map<LocalDateTime, String> history = new HashMap<>();
+    private Position position = new Position();
+    private Map<LocalDateTime, Activity> history = new HashMap<>();
 
     public Npc() {
         id = generator.getAndAccumulate(1, Integer::sum);
     }
 
-    public Npc addHistory(String description) {
-        history.put(LocalDateTime.now(), description);
+    public Npc addActivity(Activity activity) {
+        history.put(LocalDateTime.now(), activity);
         return this;
-    }
-
-    public static AtomicReference<Integer> getGenerator() {
-        return generator;
-    }
-
-    public static void setGenerator(final AtomicReference<Integer> generator) {
-        Npc.generator = generator;
     }
 
     public Integer getId() {
         return id;
-    }
-
-    public Npc setId(final Integer id) {
-        this.id = id;
-        return this;
     }
 
     public String getName() {
@@ -49,7 +38,16 @@ public class Npc {
         return this;
     }
 
-    public Map<LocalDateTime, String> getHistory() {
+    public Position getPosition() {
+        return position;
+    }
+
+    public Npc setPosition(final Position position) {
+        this.position = position;
+        return this;
+    }
+
+    public Map<LocalDateTime, Activity> getActivityHistory() {
         return history;
     }
 
@@ -60,12 +58,12 @@ public class Npc {
         final Npc npc = (Npc) o;
         return Objects.equals(getId(), npc.getId()) &&
                 Objects.equals(getName(), npc.getName()) &&
-                Objects.equals(getHistory(), npc.getHistory());
+                Objects.equals(getActivityHistory(), npc.getActivityHistory());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getHistory());
+        return Objects.hash(getId(), getName(), getActivityHistory());
     }
 
     @Override

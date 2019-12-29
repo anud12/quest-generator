@@ -1,6 +1,7 @@
 package ro.anud.anud.quest;
 
 import ro.anud.anud.action.KillDilema;
+import ro.anud.anud.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcRepository;
 
@@ -10,6 +11,10 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class KillGroup implements Quest {
+
+    public static Activity killGroupQuestActivity = () -> "Given kill group quest";
+
+    private int targetNumber;
     private int number;
 
     private Map<Integer, Npc> npcMap = new HashMap<>();
@@ -17,28 +22,33 @@ public class KillGroup implements Quest {
 
     public KillGroup(Npc npc, int number) {
         this.npc = npc;
-        npc.addHistory("Given Kill quest");
-        this.number = number;
+        npc.addActivity(killGroupQuestActivity);
+        this.targetNumber = number;
         Stream.iterate(0, integer -> integer + 1)
                 .limit(number)
                 .forEach(integer -> {
-                    npcMap.put(integer, NpcRepository.create().addHistory("Marked for death"));
+                    npcMap.put(integer, NpcRepository.create().addActivity(Activity.wanted));
                 });
     }
 
     @Override
+    public String getDescription() {
+        return "Kill for " + npc.getName() + " " + number + " of " + targetNumber + " : ";
+    }
+
+    @Override
     public Quest read(final Supplier<String> s) {
-        System.out.print("Kill quest - " + number + ": ");
         if (!s.get().equals("k")) {
             return this;
         }
 
-        this.number = this.number - 1;
-        npcMap.get(this.number).addHistory("Killed");
-        if (this.number <= 0) {
-            return new TurnInQuest(npc);
+        if (this.number >= targetNumber) {
+            return new ClaimRewardQuest(npc);
         }
 
-        return new KillDilema(() -> this).get();
+        return new KillDilema(npcMap.get(this.number), () -> {
+            this.number = this.number + 1;
+            return this;
+        }).get();
     }
 }

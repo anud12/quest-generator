@@ -1,5 +1,6 @@
 package ro.anud.anud.quest;
 
+import ro.anud.anud.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcRepository;
 
@@ -7,22 +8,28 @@ import java.util.function.Supplier;
 
 public class DiscoverNpc implements Quest {
 
-    private Npc targetNpc = NpcRepository.create();
 
+    public static Activity discoverQuestActivity = () -> "Given discover quest";
+    public static Activity foundActivity = () -> "Found";
+
+    private Npc targetNpc = NpcRepository.create();
     private Npc npc;
 
     public DiscoverNpc(final Npc npc) {
         this.npc = npc;
-        npc.addHistory("Given Discover Npc quest");
-        targetNpc.addHistory("Waiting to be discovered");
+        npc.addActivity(discoverQuestActivity);
+    }
+
+    @Override
+    public String getDescription() {
+        return "Discover " + targetNpc.getName() + " : ";
     }
 
     @Override
     public Quest read(final Supplier<String> s) {
-        System.out.print("Discover npc : ");
         if (s.get().equals("d")) {
-            targetNpc.addHistory("Discovered");
-            return new TurnInQuest(npc);
+            targetNpc.addActivity(foundActivity);
+            return new ClaimRewardQuest(npc);
         }
         return this;
     }

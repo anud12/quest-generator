@@ -2,11 +2,11 @@ package ro.anud.anud.npc;
 
 import java.util.List;
 
-public class WowHumanMale {
+public class Azeroth {
     //https://www.namegenerator.biz/wow-name-generator.php
     //var result = document.querySelectorAll("li[onmousedown]")
     //[...result].map((e) => `"${e.firstChild.data}"`).join(",\n");
-    public static final List<String> names = List.of(
+    public static final List<String> humanMale = List.of(
             "Olyv",
             "Gweach",
             "Anjun",

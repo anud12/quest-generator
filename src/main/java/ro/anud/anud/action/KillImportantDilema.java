@@ -1,5 +1,6 @@
 package ro.anud.anud.action;
 
+import ro.anud.anud.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.quest.Quest;
 import ro.anud.markovchain.Choice;
@@ -7,6 +8,7 @@ import ro.anud.markovchain.Choice;
 import java.util.function.Supplier;
 
 public class KillImportantDilema implements Dilema {
+
     private Supplier<Quest> parent;
     private Npc npc;
 
@@ -17,10 +19,12 @@ public class KillImportantDilema implements Dilema {
 
     @Override
     public Quest get() {
-        npc.addHistory("Killed");
+
+        npc.addActivity(Activity.slain);
+
         return new Choice<Supplier<Quest>>()
                 .addChoice(0.3, parent)
-                .addChoice(0.7, () -> new FoundImportantItemDilema().get())
+                .addChoice(0.7, () -> new FoundItemDilema().get())
                 .chose()
                 .get();
     }
