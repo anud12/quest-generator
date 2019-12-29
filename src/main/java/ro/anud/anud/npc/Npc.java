@@ -9,8 +9,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Npc {
 
-
     private static AtomicReference<Integer> generator = new AtomicReference<>(0);
+
     private Integer id;
     private String name;
     private Position position = new Position();
