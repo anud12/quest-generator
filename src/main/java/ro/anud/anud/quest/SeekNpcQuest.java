@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class SeekNpcQuest implements Quest {
 
-    public static Activity seekNpcQuestActivity = () -> "Given seek npc quest";
+    public static Activity seekNpcQuestActivity = () -> "Seek target";
     public static Activity found = () -> "Found npc";
 
     private Npc npc;

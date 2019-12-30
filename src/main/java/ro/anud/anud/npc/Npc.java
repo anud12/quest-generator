@@ -4,8 +4,12 @@ import ro.anud.anud.Position;
 import ro.anud.anud.activity.Activity;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Npc {
 
@@ -22,6 +26,7 @@ public class Npc {
 
     public Npc addActivity(Activity activity) {
         history.put(LocalDateTime.now(), activity);
+        System.out.println(LocalDateTime.now() + " - " + name + " : " + activity.getDescription());
         return this;
     }
 
@@ -73,5 +78,16 @@ public class Npc {
                 ", name='" + name + '\'' +
                 ", history=" + history +
                 '}';
+    }
+
+    public String prettyString() {
+        return "Npc{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", history=" + history.entrySet()
+                .stream()
+                .map(e -> "\n\t" + e.getKey() + " : " + e.getValue().getDescription())
+                .collect(Collectors.joining()) +
+                "}";
     }
 }

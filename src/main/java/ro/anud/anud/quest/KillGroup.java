@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static ro.anud.anud.npc.NpcFilters.*;
+
 public class KillGroup implements Quest {
 
     public static Activity killGroupQuestActivity = () -> "Given kill group quest";
@@ -27,7 +29,12 @@ public class KillGroup implements Quest {
         Stream.iterate(0, integer -> integer + 1)
                 .limit(number)
                 .forEach(integer -> {
-                    npcMap.put(integer, NpcRepository.create().addActivity(Activity.wanted));
+                    npcMap.put(integer, NpcRepository
+                            .get(isAlive()
+                                         .and(not(npc))
+                                         .and(notIn(npcMap.values()))
+                            )
+                            .addActivity(Activity.wanted));
                 });
     }
 

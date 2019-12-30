@@ -4,9 +4,7 @@ import ro.anud.anud.Position;
 import ro.anud.anud.RandomString;
 
 import java.time.temporal.ValueRange;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -23,11 +21,15 @@ public class NpcRepository {
         return npcMap;
     }
 
+    static public Npc get(Predicate<Npc> predicate) {
+        return get(predicate, NpcRepository::create);
+    }
+
     static public Npc get(Predicate<Npc> predicate, Supplier<Npc> supplier) {
         return npcMap.values().stream()
                 .sorted((npc, t1) -> (int) (Math.random() - 0.5))
                 .filter(predicate)
-                .findFirst()
+                .findAny()
                 .orElseGet(supplier);
 
     }
@@ -41,6 +43,7 @@ public class NpcRepository {
                                  + lastName.substring(0, 1).toUpperCase() + lastName.substring(1))
                 .setPosition(new Position(random.nextInt(10), random.nextInt(10)));
         npcMap.put(npc.getId(), npc);
+        System.out.println("NpcRepository - create : " + npc);
         return npc;
     }
 }

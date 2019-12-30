@@ -9,7 +9,7 @@ import ro.anud.markovchain.Choice;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import static ro.anud.anud.npc.NpcFilters.validQuestGiven;
+import static ro.anud.anud.npc.NpcFilters.*;
 
 public class GetQuestDilema implements Dilema {
 
@@ -30,11 +30,11 @@ public class GetQuestDilema implements Dilema {
 
         return new Choice<Supplier<Quest>>()
                 .addChoice(1, () -> new FetchQuest(npc))
-                .addChoice(1, () -> new KillGroup(npc, random.nextInt(4) + 2))
+                .addChoice(1, () -> new KillGroup(npc, 2))
                 .addChoice(1, () -> new DiscoverNpc(npc))
-                .addChoice(1, () -> new SeekNpcQuest(NpcRepository.get(validQuestGiven().and(npc1 -> !npc1.getId().equals(npc.getId())), NpcRepository::create)))
-                .addChoice(1, () -> new SeekNpcQuest(NpcRepository.create()))
-                .addChoice(1, () -> new EscortQuest(npc, random.nextInt(4) + 2))
+                .addChoice(1, () -> new SeekNpcQuest(NpcRepository.get(validQuestGiver().and(not(npc)))))
+                .addChoice(1, () -> new SeekNpcQuest(NpcRepository.get(isAlive().and(not(npc)))))
+                .addChoice(1, () -> new EscortQuest(npc, 2))
                 .chose()
                 .get();
     }
