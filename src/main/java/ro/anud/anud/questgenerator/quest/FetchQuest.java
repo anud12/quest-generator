@@ -1,6 +1,7 @@
-package ro.anud.anud.quest;
+package ro.anud.anud.questgenerator.quest;
 
-import ro.anud.anud.activity.Activity;
+import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 
 import java.util.function.Supplier;
@@ -11,9 +12,11 @@ public class FetchQuest implements Quest {
     public static Activity receivedItemActivity = () -> "Received item";
 
     private Npc npc;
+    private NpcGenerator npcGenerator;
 
-    public FetchQuest(final Npc npc) {
+    public FetchQuest(final NpcGenerator npcGenerator, final Npc npc) {
         this.npc = npc;
+        this.npcGenerator = npcGenerator;
         npc.addActivity(fetchQuestActivity);
     }
 
@@ -26,7 +29,7 @@ public class FetchQuest implements Quest {
     public Quest read(final Supplier<String> s) {
         if (s.get().equals("f")) {
             npc.addActivity(receivedItemActivity);
-            return new ClaimRewardQuest(npc);
+            return new ClaimRewardQuest(npcGenerator, npc);
         }
         return this;
     }

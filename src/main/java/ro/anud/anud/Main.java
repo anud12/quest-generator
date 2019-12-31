@@ -1,7 +1,7 @@
 package ro.anud.anud;
 
-import ro.anud.anud.action.GetQuestDilema;
-import ro.anud.anud.activity.Activity;
+import ro.anud.anud.questgenerator.action.GetQuestDilemma;
+import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcRepository;
 
@@ -17,16 +17,17 @@ import java.util.stream.Stream;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        NpcRepository npcRepository = new NpcRepository();
         Activity spawned = () -> "Spawned";
 
         Stream.generate(() -> spawned)
                 .limit(4)
                 .forEach(activity -> {
-                    NpcRepository.create();
+                    npcRepository.create();
                 });
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        var startingQuest = new GetQuestDilema(NpcRepository.create()).get();
+        var startingQuest = new GetQuestDilemma(npcRepository::get, npcRepository.create()).get();
         var player = new Player(new Position(0, 0), startingQuest);
         var keepGoing = new AtomicBoolean(true);
 
@@ -44,7 +45,7 @@ public class Main {
                 continue;
             }
             if (line.equals("listNpc")) {
-                NpcRepository.getMap().values().stream().map(Npc::prettyString).forEach(System.out::println);
+                npcRepository.getMap().values().stream().map(Npc::prettyString).forEach(System.out::println);
                 continue;
             }
 
@@ -52,7 +53,7 @@ public class Main {
             player.setQuest(newQuest);
         }
 
-        NpcRepository.getMap().values()
+        npcRepository.getMap().values()
                 .stream()
                 .flatMap(npc -> npc.getActivityHistory().entrySet()
                         .stream()

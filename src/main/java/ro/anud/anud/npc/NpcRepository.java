@@ -10,22 +10,22 @@ import java.util.function.Supplier;
 
 public class NpcRepository {
 
-    static private Map<Integer, Npc> npcMap = new HashMap<>();
-    static private Random random = new Random();
-    static private RandomString randomString = new RandomString(Azeroth.humanMale,
-                                                                2,
-                                                                ValueRange.of(4, 8),
-                                                                new Random());
+    private Map<Integer, Npc> npcMap = new HashMap<>();
+    private Random random = new Random();
+    private RandomString randomString = new RandomString(Azeroth.humanMale,
+                                                         2,
+                                                         ValueRange.of(4, 8),
+                                                         new Random());
 
-    static public Map<Integer, Npc> getMap() {
+    public Map<Integer, Npc> getMap() {
         return npcMap;
     }
 
-    static public Npc get(Predicate<Npc> predicate) {
-        return get(predicate, NpcRepository::create);
+    public Npc get(Predicate<Npc> predicate) {
+        return get(predicate, this::create);
     }
 
-    static public Npc get(Predicate<Npc> predicate, Supplier<Npc> supplier) {
+    public Npc get(Predicate<Npc> predicate, Supplier<Npc> supplier) {
         return npcMap.values().stream()
                 .sorted((npc, t1) -> (int) (Math.random() - 0.5))
                 .filter(predicate)
@@ -34,7 +34,7 @@ public class NpcRepository {
 
     }
 
-    static public Npc create() {
+    public Npc create() {
         var firstName = randomString.generate();
         var lastName = randomString.generate();
         var npc = new Npc()

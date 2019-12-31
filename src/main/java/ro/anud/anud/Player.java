@@ -1,6 +1,6 @@
 package ro.anud.anud;
 
-import ro.anud.anud.quest.Quest;
+import ro.anud.anud.questgenerator.quest.Quest;
 
 public class Player {
     private Position position;

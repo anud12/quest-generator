@@ -1,4 +1,4 @@
-package ro.anud.anud.activity;
+package ro.anud.anud.questgenerator.activity;
 
 public interface Activity {
 

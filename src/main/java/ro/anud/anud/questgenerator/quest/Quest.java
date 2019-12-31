@@ -1,4 +1,4 @@
-package ro.anud.anud.quest;
+package ro.anud.anud.questgenerator.quest;
 
 import java.util.function.Supplier;
 

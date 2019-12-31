@@ -1,9 +1,9 @@
-package ro.anud.anud.quest;
+package ro.anud.anud.questgenerator.quest;
 
-import ro.anud.anud.activity.Activity;
+import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcFilters;
-import ro.anud.anud.npc.NpcRepository;
 
 import java.util.function.Supplier;
 
@@ -15,10 +15,12 @@ public class DiscoverNpc implements Quest {
 
     private Npc targetNpc;
     private Npc npc;
+    private NpcGenerator npcGenerator;
 
-    public DiscoverNpc(final Npc npc) {
+    public DiscoverNpc(final NpcGenerator npcGenerator, final Npc npc) {
         this.npc = npc;
-        targetNpc = NpcRepository.get(NpcFilters.isAlive().and(NpcFilters.not(npc)));
+        this.npcGenerator = npcGenerator;
+        targetNpc = npcGenerator.get(NpcFilters.isAlive().and(NpcFilters.not(npc)));
         npc.addActivity(discoverQuestActivity);
     }
 
@@ -31,7 +33,7 @@ public class DiscoverNpc implements Quest {
     public Quest read(final Supplier<String> s) {
         if (s.get().equals("d")) {
             targetNpc.addActivity(foundActivity);
-            return new ClaimRewardQuest(npc);
+            return new ClaimRewardQuest(npcGenerator, npc);
         }
         return this;
     }

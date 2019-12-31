@@ -1,14 +1,13 @@
 package ro.anud.anud.npc;
 
 import ro.anud.anud.Position;
-import ro.anud.anud.activity.Activity;
+import ro.anud.anud.questgenerator.activity.Activity;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Npc {
@@ -76,6 +75,7 @@ public class Npc {
         return "Npc{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", position=" + position +
                 ", history=" + history +
                 '}';
     }
@@ -84,6 +84,7 @@ public class Npc {
         return "Npc{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", position=" + position +
                 ", history=" + history.entrySet()
                 .stream()
                 .map(e -> "\n\t" + e.getKey() + " : " + e.getValue().getDescription())

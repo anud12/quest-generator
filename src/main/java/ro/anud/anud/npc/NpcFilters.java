@@ -1,7 +1,7 @@
 package ro.anud.anud.npc;
 
-import ro.anud.anud.action.Betrayal;
-import ro.anud.anud.activity.Activity;
+import ro.anud.anud.questgenerator.action.Betrayal;
+import ro.anud.anud.questgenerator.activity.Activity;
 
 import java.util.Collection;
 import java.util.List;
