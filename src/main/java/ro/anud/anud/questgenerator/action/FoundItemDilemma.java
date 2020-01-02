@@ -1,6 +1,6 @@
 package ro.anud.anud.questgenerator.action;
 
-import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcFilters;
@@ -12,11 +12,11 @@ public class FoundItemDilemma implements Dilemma {
     public static Activity lostItem = () -> "Lost item";
 
     private final Npc targetNpc;
-    private NpcGenerator npcGenerator;
+    private QuestScope questScope;
 
-    public FoundItemDilemma(final NpcGenerator npcGenerator) {
-        this.npcGenerator = npcGenerator;
-        this.targetNpc = npcGenerator.get(NpcFilters.isAlive())
+    public FoundItemDilemma(final QuestScope questScope) {
+        this.questScope = questScope;
+        this.targetNpc = questScope.getNpc(NpcFilters.isAlive())
                 .addActivity(lostItem)
                 .addActivity(Activity.waitsForPlayer);
         System.out.println("Found important item");
@@ -24,6 +24,6 @@ public class FoundItemDilemma implements Dilemma {
 
     @Override
     public Quest get() {
-        return new SeekNpcQuest(npcGenerator, targetNpc);
+        return new SeekNpcQuest(questScope, targetNpc);
     }
 }

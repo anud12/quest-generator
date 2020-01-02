@@ -1,6 +1,6 @@
 package ro.anud.anud.questgenerator.quest;
 
-import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.action.KillDilemma;
 import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
@@ -21,18 +21,18 @@ public class KillGroup implements Quest {
 
     private Map<Integer, Npc> npcMap = new HashMap<>();
     private Npc npc;
-    private NpcGenerator npcGenerator;
+    private QuestScope questScope;
 
-    public KillGroup(NpcGenerator npcGenerator, Npc npc, int targetNumber) {
+    public KillGroup(QuestScope questScope, Npc npc, int targetNumber) {
         this.npc = npc;
         npc.addActivity(killGroupQuestActivity);
         this.targetNumber = targetNumber;
-        this.npcGenerator = npcGenerator;
+        this.questScope = questScope;
         Stream.iterate(0, integer -> integer + 1)
                 .limit(targetNumber)
                 .forEach(integer -> {
-                    npcMap.put(integer, npcGenerator
-                            .get(isAlive()
+                    npcMap.put(integer, questScope
+                            .getNpc(isAlive()
                                          .and(not(npc))
                                          .and(notIn(npcMap.values()))
                             )
@@ -52,10 +52,10 @@ public class KillGroup implements Quest {
         }
 
         if (this.number >= targetNumber) {
-            return new ClaimRewardQuest(npcGenerator, npc);
+            return new ClaimRewardQuest(questScope, npc);
         }
 
-        return new KillDilemma(npcGenerator, npcMap.get(this.number), () -> {
+        return new KillDilemma(questScope, npcMap.get(this.number), () -> {
             this.number = this.number + 1;
             return this;
         }).get();

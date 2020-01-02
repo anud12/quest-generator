@@ -1,6 +1,6 @@
 package ro.anud.anud.questgenerator.quest;
 
-import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.action.GetQuestDilemma;
 import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
@@ -12,11 +12,11 @@ public class ClaimRewardQuest implements Quest {
     public static Activity turnInQuest = () -> "Rewarded player";
 
     private Npc npc;
-    private NpcGenerator npcGenerator;
+    private QuestScope questScope;
 
-    public ClaimRewardQuest(final NpcGenerator npcGenerator, final Npc npc) {
+    public ClaimRewardQuest(final QuestScope questScope, final Npc npc) {
         this.npc = npc;
-        this.npcGenerator = npcGenerator;
+        this.questScope = questScope;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ClaimRewardQuest implements Quest {
     public Quest read(final Supplier<String> s) {
         if (s.get().equals("c")) {
             npc.addActivity(turnInQuest);
-            return new GetQuestDilemma(npcGenerator, npc).get();
+            return new GetQuestDilemma(questScope, npc).get();
         }
         return this;
     }

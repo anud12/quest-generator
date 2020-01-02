@@ -1,5 +1,6 @@
 package ro.anud.anud;
 
+import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.action.GetQuestDilemma;
 import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
@@ -18,6 +19,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         NpcRepository npcRepository = new NpcRepository();
+        QuestScope questScope = new QuestScope()
+                .setNpcSupplier(npcRepository::get);
         Activity spawned = () -> "Spawned";
 
         Stream.generate(() -> spawned)
@@ -27,7 +30,7 @@ public class Main {
                 });
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        var startingQuest = new GetQuestDilemma(npcRepository::get, npcRepository.create()).get();
+        var startingQuest = new GetQuestDilemma(questScope, npcRepository.create()).get();
         var player = new Player(new Position(0, 0), startingQuest);
         var keepGoing = new AtomicBoolean(true);
 
@@ -53,7 +56,8 @@ public class Main {
             player.setQuest(newQuest);
         }
 
-        npcRepository.getMap().values()
+        npcRepository.getMap()
+                .values()
                 .stream()
                 .flatMap(npc -> npc.getActivityHistory().entrySet()
                         .stream()

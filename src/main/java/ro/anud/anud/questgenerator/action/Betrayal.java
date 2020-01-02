@@ -1,6 +1,6 @@
 package ro.anud.anud.questgenerator.action;
 
-import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.questgenerator.quest.KillImportantQuest;
@@ -10,11 +10,11 @@ public class Betrayal implements Dilemma {
 
     public static Activity betrayerActivity = () -> "Betrayed";
 
-    private NpcGenerator npcGenerator;
+    private QuestScope questScope;
     private Npc npc;
 
-    public Betrayal(final NpcGenerator npcGenerator, final Npc npc) {
-        this.npcGenerator = npcGenerator;
+    public Betrayal(final QuestScope questScope, final Npc npc) {
+        this.questScope = questScope;
         this.npc = npc;
         npc.addActivity(betrayerActivity);
     }
@@ -22,6 +22,6 @@ public class Betrayal implements Dilemma {
     @Override
     public Quest get() {
         System.out.println(betrayerActivity.getDescription());
-        return new KillImportantQuest(npcGenerator, npc);
+        return new KillImportantQuest(questScope, npc);
     }
 }

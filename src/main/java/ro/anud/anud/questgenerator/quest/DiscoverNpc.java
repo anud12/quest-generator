@@ -1,6 +1,6 @@
 package ro.anud.anud.questgenerator.quest;
 
-import ro.anud.anud.questgenerator.NpcGenerator;
+import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcFilters;
@@ -15,12 +15,12 @@ public class DiscoverNpc implements Quest {
 
     private Npc targetNpc;
     private Npc npc;
-    private NpcGenerator npcGenerator;
+    private QuestScope questScope;
 
-    public DiscoverNpc(final NpcGenerator npcGenerator, final Npc npc) {
+    public DiscoverNpc(final QuestScope questScope, final Npc npc) {
         this.npc = npc;
-        this.npcGenerator = npcGenerator;
-        targetNpc = npcGenerator.get(NpcFilters.isAlive().and(NpcFilters.not(npc)));
+        this.questScope = questScope;
+        targetNpc = questScope.getNpc(NpcFilters.isAlive().and(NpcFilters.not(npc)));
         npc.addActivity(discoverQuestActivity);
     }
 
@@ -33,7 +33,7 @@ public class DiscoverNpc implements Quest {
     public Quest read(final Supplier<String> s) {
         if (s.get().equals("d")) {
             targetNpc.addActivity(foundActivity);
-            return new ClaimRewardQuest(npcGenerator, npc);
+            return new ClaimRewardQuest(questScope, npc);
         }
         return this;
     }
