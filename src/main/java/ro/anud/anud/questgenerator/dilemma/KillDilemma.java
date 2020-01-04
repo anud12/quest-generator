@@ -1,8 +1,8 @@
-package ro.anud.anud.questgenerator.action;
+package ro.anud.anud.questgenerator.dilemma;
 
 import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
-import ro.anud.anud.npc.Npc;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 import ro.anud.anud.questgenerator.quest.Quest;
 import ro.anud.markovchain.Choice;
 
@@ -12,9 +12,9 @@ public class KillDilemma implements Dilemma {
 
     private QuestScope questScope;
     private Supplier<Quest> parent;
-    private Npc npc;
+    private QuestNpc npc;
 
-    public KillDilemma(QuestScope questScope, Npc npc, final Supplier<Quest> parent) {
+    public KillDilemma(QuestScope questScope, QuestNpc npc, final Supplier<Quest> parent) {
         this.questScope = questScope;
         this.parent = parent;
         this.npc = npc;

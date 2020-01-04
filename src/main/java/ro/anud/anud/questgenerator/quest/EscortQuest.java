@@ -1,9 +1,9 @@
 package ro.anud.anud.questgenerator.quest;
 
 import ro.anud.anud.questgenerator.QuestScope;
-import ro.anud.anud.questgenerator.action.Betrayal;
 import ro.anud.anud.questgenerator.activity.Activity;
-import ro.anud.anud.npc.Npc;
+import ro.anud.anud.questgenerator.dilemma.Betrayal;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 import ro.anud.markovchain.Choice;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -16,9 +16,9 @@ public class EscortQuest implements Quest {
 
     private QuestScope questScope;
     private AtomicReference<Integer> distance;
-    private Npc npc;
+    private QuestNpc npc;
 
-    public EscortQuest(final QuestScope questScope, final Npc npc, final Integer distance) {
+    public EscortQuest(final QuestScope questScope, final QuestNpc npc, final Integer distance) {
         this.questScope = questScope;
         this.distance = new AtomicReference<>(distance);
         this.npc = npc;

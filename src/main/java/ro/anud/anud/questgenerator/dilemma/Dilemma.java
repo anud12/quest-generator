@@ -1,4 +1,4 @@
-package ro.anud.anud.questgenerator.action;
+package ro.anud.anud.questgenerator.dilemma;
 
 import ro.anud.anud.questgenerator.quest.Quest;
 

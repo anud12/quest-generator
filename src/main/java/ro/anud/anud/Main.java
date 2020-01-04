@@ -1,15 +1,17 @@
 package ro.anud.anud;
 
-import ro.anud.anud.questgenerator.QuestScope;
-import ro.anud.anud.questgenerator.action.GetQuestDilemma;
-import ro.anud.anud.questgenerator.activity.Activity;
 import ro.anud.anud.npc.Npc;
 import ro.anud.anud.npc.NpcRepository;
+import ro.anud.anud.questgenerator.QuestScope;
+import ro.anud.anud.questgenerator.activity.Activity;
+import ro.anud.anud.questgenerator.dilemma.GetQuestDilemma;
+import ro.anud.anud.questgenerator.quest.Quest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,8 +21,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         NpcRepository npcRepository = new NpcRepository();
-        QuestScope questScope = new QuestScope()
-                .setNpcSupplier(npcRepository::get);
+        ArrayList<Quest> quests = new ArrayList<>();
+
+
+        QuestScope questScope = new QuestScope(predicate -> npcRepository.get(predicate::test),
+                                               quests);
         Activity spawned = () -> "Spawned";
 
         Stream.generate(() -> spawned)

@@ -2,7 +2,7 @@ package ro.anud.anud.questgenerator.quest;
 
 import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
-import ro.anud.anud.npc.Npc;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 
 import java.util.function.Supplier;
 
@@ -12,9 +12,9 @@ public class SeekNpcQuest implements Quest {
     public static Activity found = () -> "Found npc";
 
     private QuestScope questScope;
-    private Npc npc;
+    private QuestNpc npc;
 
-    public SeekNpcQuest(final QuestScope questScope, final Npc npc) {
+    public SeekNpcQuest(final QuestScope questScope, final QuestNpc npc) {
         this.questScope = questScope;
         this.npc = npc;
         npc.addActivity(seekNpcQuestActivity);

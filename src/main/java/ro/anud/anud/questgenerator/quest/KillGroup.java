@@ -1,9 +1,9 @@
 package ro.anud.anud.questgenerator.quest;
 
 import ro.anud.anud.questgenerator.QuestScope;
-import ro.anud.anud.questgenerator.action.KillDilemma;
 import ro.anud.anud.questgenerator.activity.Activity;
-import ro.anud.anud.npc.Npc;
+import ro.anud.anud.questgenerator.dilemma.KillDilemma;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,11 +19,11 @@ public class KillGroup implements Quest {
     private int targetNumber;
     private int number;
 
-    private Map<Integer, Npc> npcMap = new HashMap<>();
-    private Npc npc;
+    private Map<Integer, QuestNpc> npcMap = new HashMap<>();
+    private QuestNpc npc;
     private QuestScope questScope;
 
-    public KillGroup(QuestScope questScope, Npc npc, int targetNumber) {
+    public KillGroup(QuestScope questScope, QuestNpc npc, int targetNumber) {
         this.npc = npc;
         npc.addActivity(killGroupQuestActivity);
         this.targetNumber = targetNumber;
@@ -33,8 +33,8 @@ public class KillGroup implements Quest {
                 .forEach(integer -> {
                     npcMap.put(integer, questScope
                             .getNpc(isAlive()
-                                         .and(not(npc))
-                                         .and(notIn(npcMap.values()))
+                                            .and(not(npc))
+                                            .and(notIn(npcMap.values()))
                             )
                             .addActivity(Activity.wanted));
                 });

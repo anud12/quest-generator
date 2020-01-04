@@ -2,7 +2,7 @@ package ro.anud.anud.questgenerator.quest;
 
 import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
-import ro.anud.anud.npc.Npc;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 
 import java.util.function.Supplier;
 
@@ -11,10 +11,10 @@ public class FetchQuest implements Quest {
     public static Activity fetchQuestActivity = () -> "Given fetch quest";
     public static Activity receivedItemActivity = () -> "Received item";
 
-    private Npc npc;
+    private QuestNpc npc;
     private QuestScope questScope;
 
-    public FetchQuest(final QuestScope questScope, final Npc npc) {
+    public FetchQuest(final QuestScope questScope, final QuestNpc npc) {
         this.npc = npc;
         this.questScope = questScope;
         npc.addActivity(fetchQuestActivity);

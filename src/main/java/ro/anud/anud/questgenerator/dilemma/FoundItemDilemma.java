@@ -1,9 +1,9 @@
-package ro.anud.anud.questgenerator.action;
+package ro.anud.anud.questgenerator.dilemma;
 
+import ro.anud.anud.npc.NpcFilters;
 import ro.anud.anud.questgenerator.QuestScope;
 import ro.anud.anud.questgenerator.activity.Activity;
-import ro.anud.anud.npc.Npc;
-import ro.anud.anud.npc.NpcFilters;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 import ro.anud.anud.questgenerator.quest.Quest;
 import ro.anud.anud.questgenerator.quest.SeekNpcQuest;
 
@@ -11,7 +11,7 @@ public class FoundItemDilemma implements Dilemma {
 
     public static Activity lostItem = () -> "Lost item";
 
-    private final Npc targetNpc;
+    private final QuestNpc targetNpc;
     private QuestScope questScope;
 
     public FoundItemDilemma(final QuestScope questScope) {

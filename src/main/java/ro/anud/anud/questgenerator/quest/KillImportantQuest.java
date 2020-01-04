@@ -1,9 +1,9 @@
 package ro.anud.anud.questgenerator.quest;
 
-import ro.anud.anud.npc.Npc;
 import ro.anud.anud.questgenerator.QuestScope;
-import ro.anud.anud.questgenerator.action.KillImportantDilemma;
 import ro.anud.anud.questgenerator.activity.Activity;
+import ro.anud.anud.questgenerator.dilemma.KillImportantDilemma;
+import ro.anud.anud.questgenerator.external.QuestNpc;
 
 import java.util.function.Supplier;
 
@@ -15,9 +15,9 @@ public class KillImportantQuest implements Quest {
     public static Activity killImportantQuestActivity = () -> "Given kill important quest";
 
     private QuestScope questScope;
-    private Npc npc;
+    private QuestNpc npc;
 
-    public KillImportantQuest(final QuestScope questScope, final Npc npc) {
+    public KillImportantQuest(final QuestScope questScope, final QuestNpc npc) {
         this.questScope = questScope;
         this.npc = npc.addActivity(Activity.wanted);
         npc.addActivity(killImportantQuestActivity);
