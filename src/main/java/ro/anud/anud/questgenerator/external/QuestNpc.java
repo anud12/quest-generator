@@ -5,14 +5,14 @@ import ro.anud.anud.questgenerator.activity.Activity;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public interface QuestNpc {
     String getName();
 
     QuestNpc addActivity(Activity activity);
 
-    Runnable subscribeOnChanges(Consumer<Npc> npcConsumer);
+    QuestNpc subscribeOnChanges(BiConsumer<Npc, Runnable> npcConsumer);
 
     Map<LocalDateTime, Activity> getActivityHistory();
 }

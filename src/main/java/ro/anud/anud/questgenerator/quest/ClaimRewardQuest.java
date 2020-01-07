@@ -17,6 +17,8 @@ public class ClaimRewardQuest implements Quest {
     public ClaimRewardQuest(final QuestScope questScope, final QuestNpc npc) {
         this.npc = npc;
         this.questScope = questScope;
+        questScope.addQuest(this);
+
     }
 
     @Override
